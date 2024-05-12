@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Clinica.Models.Consultorio">
+    <Position X="3.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAACAAAAAAACAAgIAAAAABAAAAACAAAAAAAAA=</HashCode>
+      <FileName>Models\Consultorio.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Personas" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Clinica.Models.Diagnostico">
+    <Position X="11" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAEAAAAAAAABAAAAAAAAAAAEACAAAAA=</HashCode>
+      <FileName>Models\Diagnostico.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Persona" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Clinica.Models.ErrorViewModel" Collapsed="true">
+    <Position X="10.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\ErrorViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Clinica.Models.Especialidad">
+    <Position X="0.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Models\Especialidad.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Medicos" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Clinica.Models.Medico">
+    <Position X="0.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Models\Medico.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Especialidad" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Clinica.Models.Paciente">
+    <Position X="14.5" Y="0.5" Width="1.5" />
+    <AssociationLine Name="GrupoSanguineo" Type="Clinica.Models.GrupoSanguineo" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="14.5" Y="2.375" />
+        <Point X="13.281" Y="2.375" />
+        <Point X="13.281" Y="4.5" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAFAAAgAAAAAAgAAAAEAAgAAAAEAAAAIAAA=</HashCode>
+      <FileName>Models\Paciente.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ObraSocial" />
+      <Property Name="GrupoSanguineo" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Clinica.Models.Persona">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAEEACAAgABAAACAAAACAQAARAAAAAA=</HashCode>
+      <FileName>Models\Persona.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Consultorio" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Diagnosticos" />
+      <Property Name="Turnos" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Clinica.Models.Rol" Collapsed="true">
+    <Position X="10.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Rol.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Clinica.Models.Turno">
+    <Position X="7.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAEABAAAAAAAAAAAAAAAAAAEBCAAAAA=</HashCode>
+      <FileName>Models\Turno.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Persona" />
+      <Property Name="TipoTurno" />
+    </ShowAsAssociation>
+  </Class>
+  <Enum Name="Clinica.Models.GrupoSanguineo">
+    <Position X="12.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABEAAAIAAAAAIAAABAAAQAAAAAAACAAAAAAIAAAAA=</HashCode>
+      <FileName>Models\GrupoSanguineo.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Clinica.Models.ObraSocial">
+    <Position X="14.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAABAAAAgAAIAAAAAAAAAEAAAAAAAAAAAI=</HashCode>
+      <FileName>Models\ObraSocial.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Clinica.Models.TipoTurno">
+    <Position X="3.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\TipoTurno.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

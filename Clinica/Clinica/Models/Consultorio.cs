@@ -28,5 +28,8 @@ namespace Clinica.Models
         [EmailAddress(ErrorMessage = Errors._campoinvalido)]
         public string Email { get; set; }
 
+
+        public List<Persona> Personas { get; set; }
+
     }
 }
