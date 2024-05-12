@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Clinica.Data;
 using Clinica.Models;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
 namespace Clinica.Controllers
 {
@@ -22,7 +23,10 @@ namespace Clinica.Controllers
         // GET: Pacientes
         public async Task<IActionResult> Index()
         {
-            var clinicaContext = _context.Pacientes.Include(p => p.Consultorio);
+            var clinicaContext = _context.Pacientes
+                .Include(p => p.Consultorio)
+                .Include(p => p.Turnos)
+                .Include(p => p.Diagnosticos);
             return View(await clinicaContext.ToListAsync());
         }
 
@@ -36,6 +40,8 @@ namespace Clinica.Controllers
 
             var paciente = await _context.Pacientes
                 .Include(p => p.Consultorio)
+                .Include(p => p.Turnos)
+                .Include(p => p.Diagnosticos)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (paciente == null)
             {
@@ -48,7 +54,24 @@ namespace Clinica.Controllers
         // GET: Pacientes/Create
         public IActionResult Create()
         {
-            ViewData["ConsultorioId"] = new SelectList(_context.Consultorios, "Id", "Direccion");
+            ViewData["ConsultorioId"] = new SelectList(_context.Consultorios, "Id", "Nombre");
+
+            var obraSocialValues = Enum.GetValues(typeof(ObraSocial)).Cast<ObraSocial>().Select(v => new SelectListItem
+            {
+                Text = v.ToString(),
+                Value = ((int)v).ToString()
+            }).ToList();
+
+            var grupoSanguineoValues = Enum.GetValues(typeof(GrupoSanguineo)).Cast<GrupoSanguineo>().Select(v => new SelectListItem
+            {
+                Text = v.ToString(),
+                Value = ((int)v).ToString()
+            }).ToList();
+
+            ViewData["ObraSocial"] = new SelectList(obraSocialValues, "Value", "Text");
+            ViewData["GrupoSanguineo"] = new SelectList(grupoSanguineoValues, "Value", "Text");
+
+
             return View();
         }
 
@@ -57,15 +80,37 @@ namespace Clinica.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Donante,Alergias,Peso,Altura,DNI,Edad,ObraSocial,GrupoSanguineo,Id,Nombre,Apellido,Direccion,Foto,UserName,Password,Email,ConsultorioId,FechaAlta")] Paciente paciente)
+        public async Task<IActionResult> Create([Bind("Donante,Alergias,Peso,Altura,DNI,Edad,ObraSocial,GrupoSanguineo,Id,Nombre,Apellido,Direccion,Foto,UserName,Password,Email,ConsultorioId")] Paciente paciente)
         {
             if (ModelState.IsValid)
             {
+                paciente.FechaAlta = DateTime.Now;
+                if(paciente.UserName == null)
+                {
+                    paciente.UserName = paciente.Email;
+                }
                 _context.Add(paciente);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ConsultorioId"] = new SelectList(_context.Consultorios, "Id", "Direccion", paciente.ConsultorioId);
+            ViewData["ConsultorioId"] = new SelectList(_context.Consultorios, "Id", "Nombre", paciente.ConsultorioId);
+
+            var obraSocialValues = Enum.GetValues(typeof(ObraSocial)).Cast<ObraSocial>().Select(v => new SelectListItem
+            {
+                Text = v.ToString(),
+                Value = ((int)v).ToString()
+            }).ToList();
+
+            var grupoSanguineoValues = Enum.GetValues(typeof(GrupoSanguineo)).Cast<GrupoSanguineo>().Select(v => new SelectListItem
+            {
+                Text = v.ToString(),
+                Value = ((int)v).ToString()
+            }).ToList();
+
+            ViewData["ObraSocial"] = new SelectList(obraSocialValues, "Value", "Text", paciente.ObraSocial);
+            ViewData["GrupoSanguineo"] = new SelectList(grupoSanguineoValues, "Value", "Text", paciente.GrupoSanguineo);
+
+
             return View(paciente);
         }
 
@@ -82,7 +127,23 @@ namespace Clinica.Controllers
             {
                 return NotFound();
             }
-            ViewData["ConsultorioId"] = new SelectList(_context.Consultorios, "Id", "Direccion", paciente.ConsultorioId);
+            ViewData["ConsultorioId"] = new SelectList(_context.Consultorios, "Id", "Nombre", paciente.ConsultorioId);
+
+            var obraSocialValues = Enum.GetValues(typeof(ObraSocial)).Cast<ObraSocial>().Select(v => new SelectListItem
+            {
+                Text = v.ToString(),
+                Value = ((int)v).ToString()
+            }).ToList();
+
+            var grupoSanguineoValues = Enum.GetValues(typeof(GrupoSanguineo)).Cast<GrupoSanguineo>().Select(v => new SelectListItem
+            {
+                Text = v.ToString(),
+                Value = ((int)v).ToString()
+            }).ToList();
+
+            ViewData["ObraSocial"] = new SelectList(obraSocialValues, "Value", "Text", paciente.ObraSocial);
+            ViewData["GrupoSanguineo"] = new SelectList(grupoSanguineoValues, "Value", "Text", paciente.GrupoSanguineo);
+
             return View(paciente);
         }
 
@@ -91,9 +152,9 @@ namespace Clinica.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Donante,Alergias,Peso,Altura,DNI,Edad,ObraSocial,GrupoSanguineo,Id,Nombre,Apellido,Direccion,Foto,UserName,Password,Email,ConsultorioId,FechaAlta")] Paciente paciente)
+        public async Task<IActionResult> Edit(int id, [Bind("Donante,Alergias,Peso,Altura,DNI,Edad,ObraSocial,GrupoSanguineo,Id,Nombre,Apellido,Direccion,Foto,UserName,Password,ConsultorioId,Email")] Paciente updatedPaciente)
         {
-            if (id != paciente.Id)
+            if (id != updatedPaciente.Id)
             {
                 return NotFound();
             }
@@ -102,12 +163,25 @@ namespace Clinica.Controllers
             {
                 try
                 {
-                    _context.Update(paciente);
+                    var originalPaciente = await _context.Pacientes.FirstOrDefaultAsync(p => p.Id == id);
+                    originalPaciente.Nombre = updatedPaciente.Nombre;
+                    originalPaciente.Apellido = updatedPaciente.Apellido;
+                    originalPaciente.Direccion = updatedPaciente.Direccion;
+                    originalPaciente.Foto = updatedPaciente.Foto;
+                    originalPaciente.UserName = updatedPaciente.UserName;
+                    originalPaciente.ConsultorioId = updatedPaciente.ConsultorioId;
+                    originalPaciente.ObraSocial = updatedPaciente.ObraSocial;
+                    originalPaciente.GrupoSanguineo = updatedPaciente.GrupoSanguineo;
+                    originalPaciente.Alergias = updatedPaciente.Alergias;
+                    originalPaciente.Donante = updatedPaciente.Donante;
+                    originalPaciente.Peso = updatedPaciente.Peso;
+                    originalPaciente.Altura = updatedPaciente.Altura;
+                    _context.Update(originalPaciente);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PacienteExists(paciente.Id))
+                    if (!PacienteExists(updatedPaciente.Id))
                     {
                         return NotFound();
                     }
@@ -118,8 +192,24 @@ namespace Clinica.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ConsultorioId"] = new SelectList(_context.Consultorios, "Id", "Direccion", paciente.ConsultorioId);
-            return View(paciente);
+            ViewData["ConsultorioId"] = new SelectList(_context.Consultorios, "Id", "Nombre", updatedPaciente.ConsultorioId);
+
+            var obraSocialValues = Enum.GetValues(typeof(ObraSocial)).Cast<ObraSocial>().Select(v => new SelectListItem
+            {
+                Text = v.ToString(),
+                Value = ((int)v).ToString()
+            }).ToList();
+
+            var grupoSanguineoValues = Enum.GetValues(typeof(GrupoSanguineo)).Cast<GrupoSanguineo>().Select(v => new SelectListItem
+            {
+                Text = v.ToString(),
+                Value = ((int)v).ToString()
+            }).ToList();
+
+            ViewData["ObraSocial"] = new SelectList(obraSocialValues, "Value", "Text", updatedPaciente.ObraSocial);
+            ViewData["GrupoSanguineo"] = new SelectList(grupoSanguineoValues, "Value", "Text", updatedPaciente.GrupoSanguineo);
+
+            return View(updatedPaciente);
         }
 
         // GET: Pacientes/Delete/5
@@ -132,6 +222,8 @@ namespace Clinica.Controllers
 
             var paciente = await _context.Pacientes
                 .Include(p => p.Consultorio)
+                .Include(p => p.Turnos)
+                .Include(p => p.Diagnosticos)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (paciente == null)
             {

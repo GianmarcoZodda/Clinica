@@ -29,8 +29,10 @@ namespace Clinica.Models
         public int Edad { get; set; }
 
         [Required(ErrorMessage = Errors._required)]
+        [Display(Name = "Obra Social")]
         public ObraSocial ObraSocial { get; set; }
 
+        [Display(Name = "Grupo Sanguineo")]
         public GrupoSanguineo GrupoSanguineo { get; set; }
 
 
