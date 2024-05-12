@@ -4,6 +4,11 @@
     ViewData["Title"] = "Index";
 }
 
+@if(ViewBag.mensaje != null)
+{
+    <h2 class="text-secondary">@ViewBag.Mensaje</h2>
+}
+
 <h1>Index</h1>
 
 <p>

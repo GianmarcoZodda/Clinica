@@ -13,8 +13,10 @@ namespace Clinica.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string? mensaje)
         {
+            ViewBag.mensaje = mensaje;
+
             return View();
         }
 

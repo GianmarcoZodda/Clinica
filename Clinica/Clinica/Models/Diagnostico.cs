@@ -20,11 +20,9 @@ namespace Clinica.Models
         public DateTime Fecha { get; set; }
 
         [Required(ErrorMessage = Errors._required)]
-        [StringLength(50, MinimumLength = 5, ErrorMessage = Errors._maxmin)]
+        [StringLength(50, MinimumLength = 5, ErrorMessage = Errors._strlength)]
         public string Matricula { get; set; } = Generadores.GetNewMatricula(5);
 
-
-        [Required(ErrorMessage = Errors._required)]
         [StringLength(50, MinimumLength = 2, ErrorMessage = Errors._strlength)]
         [Display(Name = "Profesional")]
         public string ApellidoProfesional { get; set; }

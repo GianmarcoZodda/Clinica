@@ -18,24 +18,24 @@
                 <span asp-validation-for="Descripcion" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PacienteId" class="control-label"></label>
+                <label asp-for="Paciente" class="control-label"></label>
                 <select asp-for="PacienteId" class ="form-control" asp-items="ViewBag.PacienteId"></select>
             </div>
-            <div class="form-group">
+@*             <div class="form-group">
                 <label asp-for="Fecha" class="control-label"></label>
                 <input asp-for="Fecha" class="form-control" />
                 <span asp-validation-for="Fecha" class="text-danger"></span>
-            </div>
+            </div> *@
             <div class="form-group">
                 <label asp-for="Matricula" class="control-label"></label>
                 <input asp-for="Matricula" class="form-control" />
                 <span asp-validation-for="Matricula" class="text-danger"></span>
             </div>
-            <div class="form-group">
+@*             <div class="form-group">
                 <label asp-for="ApellidoProfesional" class="control-label"></label>
-                <input asp-for="ApellidoProfesional" class="form-control" />
+                <input asp-for="ApellidoProfesional" class="form-control" readonly/>
                 <span asp-validation-for="ApellidoProfesional" class="text-danger"></span>
-            </div>
+            </div> *@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

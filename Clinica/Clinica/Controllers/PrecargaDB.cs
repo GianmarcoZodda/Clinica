@@ -9,28 +9,27 @@ namespace Clinica.Controllers
     public class PrecargaDB : Controller
     {
         private ClinicaContext _context;
-        private readonly UserManager<Persona> _userManager;
-        private readonly RoleManager<Rol> _roleManager;
+        //private readonly UserManager<Persona> _userManager;
+        //private readonly RoleManager<Rol> _roleManager;
 
 
-        public PrecargaDB(ClinicaContext context, UserManager<Persona> userManager,
-            RoleManager<Rol> roleManager)
+        public PrecargaDB(ClinicaContext context)
         {
             this._context = context;
-            this._userManager = userManager;
-            this._roleManager = roleManager;
+            //this._userManager = userManager;
+            //this._roleManager = roleManager;
         }
 
 
 
         public IActionResult Seed()
         {
-            CrearRoles().Wait();
+            //CrearRoles().Wait();
 
-            if (!_context.Personas.Any())
-            {
-                this.AddAdmin().Wait();
-            }
+            //if (!_context.Personas.Any())
+            //{
+            //    this.AddAdmin().Wait();
+            //}
 
             if (!_context.Especialidades.Any())
             {
@@ -66,32 +65,32 @@ namespace Clinica.Controllers
             return RedirectToAction("Index", "Home", new { mensaje = "Borre" });
         }
 
-        private async Task CrearRoles()
-        {
-            Rol rolcliente = new Rol() { Name = "MedicoRol" };
-            Rol rolempleado = new Rol() { Name = "PacienteRol" };
-            Rol roladmin = new Rol() { Name = "AdminRol" };
+        //private async Task CrearRoles()
+        //{
+        //    Rol rolcliente = new Rol() { Name = "MedicoRol" };
+        //    Rol rolempleado = new Rol() { Name = "PacienteRol" };
+        //    Rol roladmin = new Rol() { Name = "AdminRol" };
 
-            await _roleManager.CreateAsync(rolcliente);
-            await _roleManager.CreateAsync(rolempleado);
-            await _roleManager.CreateAsync(roladmin);
-        }
+        //    await _roleManager.CreateAsync(rolcliente);
+        //    await _roleManager.CreateAsync(rolempleado);
+        //    await _roleManager.CreateAsync(roladmin);
+        //}
 
 
-        private async Task AddAdmin()
-        {
-            Persona admin = new Persona()
-            {
-                Nombre = "Lionel",
-                Apellido = "Messi",
-                Direccion = "Belgrano",
-                UserName = "lionel@messi.com.ar",
-                Email = "lionel@messi.com.ar",
-                FechaAlta = DateTime.Now,
-            };
-            await _userManager.CreateAsync(admin, "Password1!");
-            await _userManager.AddToRoleAsync(admin, "AdminRol");
-        }
+        //private async Task AddAdmin()
+        //{
+        //    Persona admin = new Persona()
+        //    {
+        //        Nombre = "Lionel",
+        //        Apellido = "Messi",
+        //        Direccion = "Belgrano",
+        //        UserName = "lionel@messi.com.ar",
+        //        Email = "lionel@messi.com.ar",
+        //        FechaAlta = DateTime.Now,
+        //    };
+        //    await _userManager.CreateAsync(admin, "Password1!");
+        //    await _userManager.AddToRoleAsync(admin, "AdminRol");
+        //}
 
 
 
@@ -186,7 +185,7 @@ namespace Clinica.Controllers
                 Foto = "notiene.jpg",
                 UserName = "Gianmarcus22",
                 Password = "Password1!",
-                Email = "medico1j@gmail.com.ar",
+                Email = "medico1@gmail.com.ar",
                 FechaAlta = DateTime.Now,
                 ConsultorioId = BuscarConsultorio("Deragopyan"),
                 EspecialidadId = BuscarEspecialidad("Dermatologia"),
