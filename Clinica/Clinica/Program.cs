@@ -16,22 +16,22 @@ namespace Clinica
 
 
             //agregar servicio
-            // builder.Services.AddDbContext<ReservaContext>(options => options.UseInMemoryDatabase("ReservaDb"));
-            builder.Services.AddDbContext<ClinicaContext>(options =>
-                     options.UseSqlServer(builder.Configuration.GetConnectionString("ClinicaBD"))
-                     );
+            builder.Services.AddDbContext<ClinicaContext>(options => options.UseInMemoryDatabase("ClinicaBD"));
+            //builder.Services.AddDbContext<ClinicaContext>(options =>
+            //         options.UseSqlServer(builder.Configuration.GetConnectionString("ClinicaBD"))
+            //         );
 
-            builder.Services.AddIdentity<Persona, Rol>().AddEntityFrameworkStores<ClinicaContext>();
+            //builder.Services.AddIdentity<Persona, Rol>().AddEntityFrameworkStores<ClinicaContext>();
 
-            builder.Services.Configure<IdentityOptions>(opciones =>
-            {
-                opciones.Password.RequireNonAlphanumeric = false;
-                opciones.Password.RequireLowercase = false;
-                opciones.Password.RequireUppercase = false;
-                opciones.Password.RequireDigit = false;
-                opciones.Password.RequiredLength = 8;
-            }
-            );
+            //builder.Services.Configure<IdentityOptions>(opciones =>
+            //{
+            //    opciones.Password.RequireNonAlphanumeric = false;
+            //    opciones.Password.RequireLowercase = false;
+            //    opciones.Password.RequireUppercase = false;
+            //    opciones.Password.RequireDigit = false;
+            //    opciones.Password.RequiredLength = 8;
+            //}
+            //);
 
             var app = builder.Build();
 
@@ -48,7 +48,7 @@ namespace Clinica
 
             app.UseRouting();
 
-            app.UseAuthentication();
+            //app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(

@@ -5,9 +5,9 @@ using Clinica.Helpers;
 
 namespace Clinica.Models
 {
-    public class Persona : IdentityUser<int>
+    public class Persona /*: IdentityUser<int>*/
     {
-        //public int Id { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = Errors._required)]
         [StringLength(50, MinimumLength = 2, ErrorMessage = Errors._strlength)]
@@ -24,23 +24,28 @@ namespace Clinica.Models
 
         public string Foto { get; set; } = "default.jpg";
 
+        //[StringLength(50, MinimumLength = 4, ErrorMessage = Errors._strlength)]
+        //[Display(Name = "Usuario")]
+        //public override string UserName
+        //{
+        //    get { return base.UserName; }
+        //    set
+        //    {
+        //        if (string.IsNullOrEmpty(value))
+        //        {
+        //            base.UserName = base.Email;
+        //        }
+        //        else
+        //        {
+        //            base.UserName = value;
+        //        }
+        //    }
+        //}
+
+
         [StringLength(50, MinimumLength = 4, ErrorMessage = Errors._strlength)]
         [Display(Name = "Usuario")]
-        public override string UserName
-        {
-            get { return base.UserName; }
-            set
-            {
-                if (string.IsNullOrEmpty(value))
-                {
-                    base.UserName = base.Email;
-                }
-                else
-                {
-                    base.UserName = value;
-                }
-            }
-        }
+        public string UserName { get; set; }
 
 
         [Required(ErrorMessage = Errors._required)]
@@ -50,13 +55,17 @@ namespace Clinica.Models
         public string Password { get; set; } = "Password1!";
 
 
+        //[Required(ErrorMessage = Errors._required)]
+        //[EmailAddress(ErrorMessage = Errors._campoinvalido)]
+        //public override string Email
+        //{
+        //    get { return base.Email; }
+        //    set { base.Email = value; }
+        //}
+
         [Required(ErrorMessage = Errors._required)]
         [EmailAddress(ErrorMessage = Errors._campoinvalido)]
-        public override string Email
-        {
-            get { return base.Email; }
-            set { base.Email = value; }
-        }
+        public string Email {  get; set; }
 
         public List<Turno> Turnos { get; set; }
 

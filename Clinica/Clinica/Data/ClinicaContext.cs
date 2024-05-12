@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Clinica.Data
 {
-    public class ClinicaContext : IdentityDbContext<IdentityUser<int>, IdentityRole<int>, int>
+    public class ClinicaContext : DbContext
     {
 
         public ClinicaContext(DbContextOptions<ClinicaContext> options) : base(options) { }
