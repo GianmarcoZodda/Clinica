@@ -12,11 +12,21 @@ namespace Clinica.Models
         public string Descripcion { get; set; }
 
 
-        public int PersonaId { get; set; }
+        public int PacienteId { get; set; }
 
-        public Persona Persona { get; set; }
+        public Paciente Paciente { get; set; }
 
         [Required(ErrorMessage = Errors._required)]
         public DateTime Fecha { get; set; }
+
+        [Required(ErrorMessage = Errors._required)]
+        [StringLength(50, MinimumLength = 5, ErrorMessage = Errors._maxmin)]
+        public string Matricula { get; set; } = Generadores.GetNewMatricula(5);
+
+
+        [Required(ErrorMessage = Errors._required)]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = Errors._strlength)]
+        [Display(Name = "Profesional")]
+        public string ApellidoProfesional { get; set; }
     }
 }

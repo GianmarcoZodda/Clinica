@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Clinica.Models.Diagnostico>
+﻿@model IEnumerable<Clinica.Models.Reserva>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,19 +13,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Descripcion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Paciente)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Fecha)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Matricula)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ApellidoProfesional)
+                @Html.DisplayNameFor(model => model.Paciente)
             </th>
             <th></th>
         </tr>
@@ -34,19 +25,10 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Paciente.Apellido)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Fecha)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Matricula)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ApellidoProfesional)
+                @Html.DisplayFor(modelItem => item.Paciente.Apellido)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

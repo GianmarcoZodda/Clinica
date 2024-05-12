@@ -22,7 +22,7 @@ namespace Clinica.Controllers
         // GET: Turnos
         public async Task<IActionResult> Index()
         {
-            var clinicaContext = _context.Turnos.Include(t => t.Persona);
+            var clinicaContext = _context.Turnos.Include(t => t.Medico);
             return View(await clinicaContext.ToListAsync());
         }
 
@@ -35,7 +35,7 @@ namespace Clinica.Controllers
             }
 
             var turno = await _context.Turnos
-                .Include(t => t.Persona)
+                .Include(t => t.Medico)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (turno == null)
             {
@@ -48,7 +48,7 @@ namespace Clinica.Controllers
         // GET: Turnos/Create
         public IActionResult Create()
         {
-            ViewData["PersonaId"] = new SelectList(_context.Personas, "Id", "Apellido");
+            ViewData["MedicoId"] = new SelectList(_context.Medicos, "Id", "Apellido");
             return View();
         }
 
@@ -57,7 +57,7 @@ namespace Clinica.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Fecha,PersonaId,Disponible,TipoTurno")] Turno turno)
+        public async Task<IActionResult> Create([Bind("Id,Fecha,MedicoId,Disponible")] Turno turno)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +65,7 @@ namespace Clinica.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PersonaId"] = new SelectList(_context.Personas, "Id", "Apellido", turno.PersonaId);
+            ViewData["MedicoId"] = new SelectList(_context.Medicos, "Id", "Apellido", turno.MedicoId);
             return View(turno);
         }
 
@@ -82,7 +82,7 @@ namespace Clinica.Controllers
             {
                 return NotFound();
             }
-            ViewData["PersonaId"] = new SelectList(_context.Personas, "Id", "Apellido", turno.PersonaId);
+            ViewData["MedicoId"] = new SelectList(_context.Medicos, "Id", "Apellido", turno.MedicoId);
             return View(turno);
         }
 
@@ -91,7 +91,7 @@ namespace Clinica.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Fecha,PersonaId,Disponible,TipoTurno")] Turno turno)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Fecha,MedicoId,Disponible")] Turno turno)
         {
             if (id != turno.Id)
             {
@@ -118,7 +118,7 @@ namespace Clinica.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PersonaId"] = new SelectList(_context.Personas, "Id", "Apellido", turno.PersonaId);
+            ViewData["MedicoId"] = new SelectList(_context.Medicos, "Id", "Apellido", turno.MedicoId);
             return View(turno);
         }
 
@@ -131,7 +131,7 @@ namespace Clinica.Controllers
             }
 
             var turno = await _context.Turnos
-                .Include(t => t.Persona)
+                .Include(t => t.Medico)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (turno == null)
             {

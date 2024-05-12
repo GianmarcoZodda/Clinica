@@ -10,14 +10,12 @@ namespace Clinica.Models
         [Required(ErrorMessage = Errors._required)]
         public DateTime Fecha { get; set; }
 
-        public int PersonaId { get; set; }
+        public int MedicoId { get; set; }
 
-        public Persona Persona { get; set; }
+        public Medico Medico { get; set; }
 
         [Required(ErrorMessage = Errors._required)]
         public bool Disponible { get; set; } = true;
-
-        public TipoTurno TipoTurno { get; set; }
 
     }
 }

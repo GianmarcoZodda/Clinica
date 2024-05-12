@@ -12,5 +12,7 @@ namespace Clinica.Models
         public int EspecialidadId { get; set; }
 
         public Especialidad Especialidad { get; set; }
+
+        public List<Turno> Turnos { get; set; }
     }
 }

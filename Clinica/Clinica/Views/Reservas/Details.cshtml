@@ -1,4 +1,4 @@
-﻿@model Clinica.Models.Turno
+﻿@model Clinica.Models.Reserva
 
 @{
     ViewData["Title"] = "Details";
@@ -7,7 +7,7 @@
 <h1>Details</h1>
 
 <div>
-    <h4>Turno</h4>
+    <h4>Reserva</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -17,16 +17,10 @@
             @Html.DisplayFor(model => model.Fecha)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Medico)
+            @Html.DisplayNameFor(model => model.Paciente)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Medico.Apellido)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Disponible)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Disponible)
+            @Html.DisplayFor(model => model.Paciente.Apellido)
         </dd>
     </dl>
 </div>

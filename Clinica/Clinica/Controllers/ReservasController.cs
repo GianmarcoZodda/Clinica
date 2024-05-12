@@ -10,23 +10,23 @@ using Clinica.Models;
 
 namespace Clinica.Controllers
 {
-    public class DiagnosticosController : Controller
+    public class ReservasController : Controller
     {
         private readonly ClinicaContext _context;
 
-        public DiagnosticosController(ClinicaContext context)
+        public ReservasController(ClinicaContext context)
         {
             _context = context;
         }
 
-        // GET: Diagnosticos
+        // GET: Reservas
         public async Task<IActionResult> Index()
         {
-            var clinicaContext = _context.Diagnosticos.Include(d => d.Paciente);
+            var clinicaContext = _context.Reservas.Include(r => r.Paciente);
             return View(await clinicaContext.ToListAsync());
         }
 
-        // GET: Diagnosticos/Details/5
+        // GET: Reservas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,42 +34,42 @@ namespace Clinica.Controllers
                 return NotFound();
             }
 
-            var diagnostico = await _context.Diagnosticos
-                .Include(d => d.Paciente)
+            var reserva = await _context.Reservas
+                .Include(r => r.Paciente)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (diagnostico == null)
+            if (reserva == null)
             {
                 return NotFound();
             }
 
-            return View(diagnostico);
+            return View(reserva);
         }
 
-        // GET: Diagnosticos/Create
+        // GET: Reservas/Create
         public IActionResult Create()
         {
             ViewData["PacienteId"] = new SelectList(_context.Pacientes, "Id", "Apellido");
             return View();
         }
 
-        // POST: Diagnosticos/Create
+        // POST: Reservas/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Descripcion,PacienteId,Fecha,Matricula,ApellidoProfesional")] Diagnostico diagnostico)
+        public async Task<IActionResult> Create([Bind("Id,Fecha,PacienteId")] Reserva reserva)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(diagnostico);
+                _context.Add(reserva);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PacienteId"] = new SelectList(_context.Pacientes, "Id", "Apellido", diagnostico.PacienteId);
-            return View(diagnostico);
+            ViewData["PacienteId"] = new SelectList(_context.Pacientes, "Id", "Apellido", reserva.PacienteId);
+            return View(reserva);
         }
 
-        // GET: Diagnosticos/Edit/5
+        // GET: Reservas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,23 +77,23 @@ namespace Clinica.Controllers
                 return NotFound();
             }
 
-            var diagnostico = await _context.Diagnosticos.FindAsync(id);
-            if (diagnostico == null)
+            var reserva = await _context.Reservas.FindAsync(id);
+            if (reserva == null)
             {
                 return NotFound();
             }
-            ViewData["PacienteId"] = new SelectList(_context.Pacientes, "Id", "Apellido", diagnostico.PacienteId);
-            return View(diagnostico);
+            ViewData["PacienteId"] = new SelectList(_context.Pacientes, "Id", "Apellido", reserva.PacienteId);
+            return View(reserva);
         }
 
-        // POST: Diagnosticos/Edit/5
+        // POST: Reservas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Descripcion,PacienteId,Fecha,Matricula,ApellidoProfesional")] Diagnostico diagnostico)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Fecha,PacienteId")] Reserva reserva)
         {
-            if (id != diagnostico.Id)
+            if (id != reserva.Id)
             {
                 return NotFound();
             }
@@ -102,12 +102,12 @@ namespace Clinica.Controllers
             {
                 try
                 {
-                    _context.Update(diagnostico);
+                    _context.Update(reserva);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DiagnosticoExists(diagnostico.Id))
+                    if (!ReservaExists(reserva.Id))
                     {
                         return NotFound();
                     }
@@ -118,11 +118,11 @@ namespace Clinica.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PacienteId"] = new SelectList(_context.Pacientes, "Id", "Apellido", diagnostico.PacienteId);
-            return View(diagnostico);
+            ViewData["PacienteId"] = new SelectList(_context.Pacientes, "Id", "Apellido", reserva.PacienteId);
+            return View(reserva);
         }
 
-        // GET: Diagnosticos/Delete/5
+        // GET: Reservas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -130,35 +130,35 @@ namespace Clinica.Controllers
                 return NotFound();
             }
 
-            var diagnostico = await _context.Diagnosticos
-                .Include(d => d.Paciente)
+            var reserva = await _context.Reservas
+                .Include(r => r.Paciente)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (diagnostico == null)
+            if (reserva == null)
             {
                 return NotFound();
             }
 
-            return View(diagnostico);
+            return View(reserva);
         }
 
-        // POST: Diagnosticos/Delete/5
+        // POST: Reservas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var diagnostico = await _context.Diagnosticos.FindAsync(id);
-            if (diagnostico != null)
+            var reserva = await _context.Reservas.FindAsync(id);
+            if (reserva != null)
             {
-                _context.Diagnosticos.Remove(diagnostico);
+                _context.Reservas.Remove(reserva);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool DiagnosticoExists(int id)
+        private bool ReservaExists(int id)
         {
-            return _context.Diagnosticos.Any(e => e.Id == id);
+            return _context.Reservas.Any(e => e.Id == id);
         }
     }
 }

@@ -67,10 +67,6 @@ namespace Clinica.Models
         [EmailAddress(ErrorMessage = Errors._campoinvalido)]
         public string Email {  get; set; }
 
-        public List<Turno> Turnos { get; set; }
-
-        public List<Diagnostico> Diagnosticos { get; set; }
-
         public int ConsultorioId { get; set; }
         public Consultorio Consultorio { get; set; }
 

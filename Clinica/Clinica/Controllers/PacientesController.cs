@@ -25,8 +25,8 @@ namespace Clinica.Controllers
         {
             var clinicaContext = _context.Pacientes
                 .Include(p => p.Consultorio)
-                .Include(p => p.Turnos)
-                .Include(p => p.Diagnosticos);
+                .Include(p => p.Diagnosticos)
+                .Include(p => p.Reservas); 
             return View(await clinicaContext.ToListAsync());
         }
 
@@ -40,8 +40,8 @@ namespace Clinica.Controllers
 
             var paciente = await _context.Pacientes
                 .Include(p => p.Consultorio)
-                .Include(p => p.Turnos)
                 .Include(p => p.Diagnosticos)
+                .Include(p => p.Reservas)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (paciente == null)
             {
@@ -222,8 +222,8 @@ namespace Clinica.Controllers
 
             var paciente = await _context.Pacientes
                 .Include(p => p.Consultorio)
-                .Include(p => p.Turnos)
                 .Include(p => p.Diagnosticos)
+                .Include(p => p.Reservas)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (paciente == null)
             {

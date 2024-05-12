@@ -17,6 +17,7 @@ namespace Clinica.Data
         public DbSet<Paciente> Pacientes { get; set; }
         public DbSet<Persona> Personas { get; set; }
         public DbSet<Turno> Turnos { get; set; }
+        public DbSet<Reserva> Reservas { get; set; }
         public DbSet<Rol> Roles { get; set; }
     }
 }

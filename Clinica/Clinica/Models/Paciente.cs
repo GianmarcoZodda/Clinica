@@ -35,6 +35,10 @@ namespace Clinica.Models
         [Display(Name = "Grupo Sanguineo")]
         public GrupoSanguineo GrupoSanguineo { get; set; }
 
+        public List<Diagnostico> Diagnosticos { get; set; }
+
+        public List<Reserva> Reservas { get; set; }
+
 
     }
 }

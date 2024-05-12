@@ -26,8 +26,7 @@ namespace Clinica.Controllers
             var clinicaContext = _context.Medicos
                 .Include(m => m.Consultorio)
                 .Include(m => m.Especialidad)
-                .Include(p => p.Turnos)
-                .Include(p => p.Diagnosticos);
+                .Include(p => p.Turnos);
             return View(await clinicaContext.ToListAsync());
         }
 
@@ -43,7 +42,6 @@ namespace Clinica.Controllers
                 .Include(m => m.Consultorio)
                 .Include(m => m.Especialidad)
                 .Include(p => p.Turnos)
-                .Include(p => p.Diagnosticos)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (medico == null)
             {
@@ -156,7 +154,6 @@ namespace Clinica.Controllers
                 .Include(m => m.Consultorio)
                 .Include(m => m.Especialidad)
                 .Include(p => p.Turnos)
-                .Include(p => p.Diagnosticos)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (medico == null)
             {
