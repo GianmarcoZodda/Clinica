@@ -182,5 +182,28 @@ namespace Clinica.Controllers
         {
             return _context.Medicos.Any(e => e.Id == id);
         }
+
+        //get
+        public IActionResult Agenda(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var medico = _context.Medicos.Include(m => m.Consultorio)
+                .Include(m => m.Especialidad)
+                .Include(p => p.Turnos)
+                .FirstOrDefault(m => m.Id == id); ;
+
+            if(medico == null)
+            {
+                return NotFound();
+            }
+
+            return View(medico);
+        }
+
+
     }
 }

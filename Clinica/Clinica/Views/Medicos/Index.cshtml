@@ -9,6 +9,9 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<a asp-controller="Turnos" asp-action="GenerarTurnos" class="btn btn-primary">Generar Turnos</a>
+
 <table class="table">
     <thead>
         <tr>
@@ -85,6 +88,7 @@
                 @Html.DisplayFor(modelItem => item.FechaAlta)
             </td>
             <td>
+                <a asp-action="Agenda" asp-route-id="@item.Id">Ver Turnos</a> |
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>

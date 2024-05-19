@@ -1,0 +1,35 @@
+﻿@model Medico
+
+<h2>Perfil del Médico</h2>
+
+<div>
+    <h4>Nombre: @Model.NombreCompleto</h4>
+    <!-- Agrega aquí otros detalles del médico -->
+</div>
+
+<h2>Turnos del Médico</h2>
+
+@if (Model.Turnos.Count == 0)
+{
+    <p>No hay turnos programados.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Disponible</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var turno in Model.Turnos)
+            {
+                <tr>
+                    <td>@turno.Fecha.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>@(turno.Disponible ? "Disponible" : "Ocupado")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

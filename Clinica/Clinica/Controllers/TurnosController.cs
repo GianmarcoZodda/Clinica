@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Clinica.Data;
 using Clinica.Models;
+using Clinica.ViewModels;
 
 namespace Clinica.Controllers
 {
@@ -160,5 +161,67 @@ namespace Clinica.Controllers
         {
             return _context.Turnos.Any(e => e.Id == id);
         }
+
+
+
+        [HttpGet]
+        public IActionResult GenerarTurnos()
+        {
+            ViewData["MedicoId"] = new SelectList(_context.Medicos, "Id", "NombreCompleto");
+            return View();
+        }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult GenerarTurnos([Bind("MedicoId,FechaInicio,FechaFin")] GenerarTurnosVM generarTurnosVM)
+        {
+            if (ModelState.IsValid)
+            {
+                var medico = _context.Medicos.Find(generarTurnosVM.MedicoId);
+                if (medico != null)
+                {
+                    var turnos = GenerarTurnosParaMedico(medico, generarTurnosVM.FechaInicio, generarTurnosVM.FechaFin);
+                    _context.Turnos.AddRange(turnos);
+                    _context.SaveChanges();
+                    return RedirectToAction("Index", "Home", new { mensaje = "se han generado los turnos"}); // Redirigir a la página principal
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "El médico especificado no existe.");
+                }
+            }
+            // Si llegamos aquí, hay un error, volvemos a mostrar el formulario con el ViewModel
+            return View(generarTurnosVM);
+        }
+
+        private List<Turno> GenerarTurnosParaMedico(Medico medico, DateTime fechaInicio, DateTime fechaFin)
+        {
+            var turnos = new List<Turno>();
+            for (DateTime fecha = fechaInicio; fecha <= fechaFin; fecha = fecha.AddDays(1))
+            {
+                if (fecha.DayOfWeek != DayOfWeek.Saturday && fecha.DayOfWeek != DayOfWeek.Sunday)
+                {
+                    for (int hora = 8; hora <= 14; hora++)
+                    {
+                        for (int minuto = 0; minuto < 60; minuto += 30)
+                        {
+                            turnos.Add(new Turno
+                            {
+                                Fecha = new DateTime(fecha.Year, fecha.Month, fecha.Day, hora, minuto, 0),
+                                MedicoId = medico.Id,
+                                Disponible = true
+                            });
+                        }
+                    }
+                }
+            }
+            return turnos;
+        }
+
+
+
+
     }
 }
